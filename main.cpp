@@ -17,7 +17,7 @@ struct Image
     int label;
 };
 
-void imageToIntArray(std::string file, std::vector<double>& image)
+void imageToDoubleArray(std::string file, std::vector<double>& image)
 {
     int width, height, bpp;
     uint8_t* greyscale_image = stbi_load(file.c_str(), &width, &height, &bpp, 1);
@@ -70,7 +70,7 @@ int main()
     {
         Image img;
         std::string file = entry.path().string();
-        imageToIntArray(file, img.pixels);
+        imageToDoubleArray(file, img.pixels);
         img.label = ((file.find("cat") != -1) ? (int)Animal::CAT : (int)Animal::DOG);
         data.push_back(img);
     }
@@ -129,7 +129,7 @@ int main()
     nn2.load("model.txt");
     std::vector<double> sample;
     std::string img = "sample.jpg";
-    imageToIntArray(img, sample);
+    imageToDoubleArray(img, sample);
     int samplePrediction = nn2.predict(sample);
     system(img.c_str());
     if (samplePrediction == 1) std::cout << "Dog";
